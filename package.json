@@ -5,7 +5,17 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir bin",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src test",
+    "flow": "flow check",
+    "clean": "rimraf bin",
+    "publish:patch": "npm version patch && npm publish",
+    "publish:minor": "npm version minor && npm publish",
+    "publish:major": "npm version major && npm publish",
+    "test": "jest",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": "src"
   },
   "repository": {
     "type": "git",
@@ -21,8 +31,23 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^22.4.3",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.46.2",
+    "eslint-plugin-flowtype-errors": "^3.5.1",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "flow-bin": "^0.70.0",
+    "jest-cli": "^22.4.3",
+    "npm-watch": "^0.3.0",
+    "prettier": "^1.12.1",
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "blessed": "^0.1.81",
