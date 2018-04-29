@@ -2,7 +2,7 @@
   "name": "pw98",
   "version": "1.0.0",
   "description": "customizable multiple process window",
-  "main": "index.js",
+  "bin": "bin/index.js",
   "scripts": {
     "build": "babel src --out-dir bin",
     "lint": "eslint src test",
@@ -11,7 +11,8 @@
     "publish:patch": "npm version patch && npm publish",
     "publish:minor": "npm version minor && npm publish",
     "publish:major": "npm version major && npm publish",
-    "test": "jest",
+    "test": "jest --watch",
+    "exe": "node bin/index.js ../examples/config.js",
     "watch": "npm-watch"
   },
   "watch": {
@@ -21,7 +22,11 @@
     "type": "git",
     "url": "git+https://github.com/y-takey/pw98.git"
   },
-  "keywords": ["devtool", "frontend", "terminal"],
+  "keywords": [
+    "devtool",
+    "frontend",
+    "terminal"
+  ],
   "author": "y-takey",
   "license": "MIT",
   "bugs": {
@@ -56,6 +61,7 @@
     "chalk": "^2.4.0",
     "commander": "^2.15.1",
     "cross-spawn": "^6.0.5",
+    "lodash": "^4.17.10",
     "react": "^16.3.2",
     "react-blessed": "^0.2.1",
     "request": "^2.85.0"
