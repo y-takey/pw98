@@ -12,13 +12,23 @@ class Window extends Component {
   }
 
   render() {
-    const { top, left, height, width, index, name, selected } = this.props;
+    const {
+      top,
+      left,
+      height,
+      width,
+      index,
+      name,
+      selected,
+      hidden
+    } = this.props;
 
     const options = {
       top,
       left,
       height,
       width,
+      hidden,
       border: { type: "line" },
       style: { border: { fg: selected ? "cyan" : "white" } }
     };

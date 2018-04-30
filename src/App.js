@@ -15,6 +15,14 @@ const keyDesc = _.map(
   (v, k) => ` ${k}: ${v}`
 ).join(", ");
 
+const containerOptions = {
+  keys: true,
+  keyable: true,
+  mouse: false,
+  focused: true,
+  scrollable: false
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +34,7 @@ class App extends Component {
       height,
       width,
       selectedNo: 0,
+      maximum: false,
       procs: parse(props.config, { top: 0, left: 0, height, width })
     };
   }
@@ -52,7 +61,9 @@ class App extends Component {
 
   clearLog = () => {};
 
-  toggleWindow = () => {};
+  toggleWindow = () => {
+    this.setState({ maximum: !this.state.maximum });
+  };
 
   restartProc = () => {};
 
@@ -84,32 +95,41 @@ class App extends Component {
     if (func) func(key);
   };
 
-  render() {
-    const { height, width, procs, selectedNo } = this.state;
-    const containerOptions = {
-      keys: true,
-      keyable: true,
-      mouse: false,
-      focused: true,
-      scrollable: false
+  windowProps = (rawProps, no) => {
+    const { height, width, selectedNo, maximum } = this.state;
+    const maximize = maximum && selectedNo;
+    const selected = selectedNo === no;
+
+    let props;
+    if (maximize && selected) {
+      props = {
+        top: 0,
+        left: 0,
+        height,
+        width,
+        name: rawProps.name,
+        hidden: false
+      };
+    } else {
+      props = { ...rawProps, hidden: maximize };
+    }
+
+    return {
+      ...props,
+      index: no,
+      key: `proc-${no}`,
+      selected
     };
+  };
+
+  render() {
+    const { height, width, procs } = this.state;
+    const layout = { top: 0, left: 0, height, width };
 
     return (
-      <box
-        {...containerOptions}
-        top={0}
-        left={0}
-        height={height}
-        width={width}
-        onKeypress={this.handleKeypress}
-      >
+      <box {...containerOptions} {...layout} onKeypress={this.handleKeypress}>
         {procs.map((props, i) => (
-          <Window
-            {...props}
-            index={i + 1}
-            key={`proc-${i}`}
-            selected={selectedNo - 1 === i}
-          />
+          <Window {...this.windowProps(props, i + 1)} />
         ))}
         <text top={height}>{keyDesc}</text>
       </box>
