@@ -29,14 +29,10 @@ class App extends Component {
 
     const height = process.stdout.rows - 1;
     const width = process.stdout.columns;
+    const procs = parse(props.config, { top: 0, left: 0, height, width });
+    procs.forEach((proc, i) => (proc.key = `proc${i + 1}`));
 
-    this.state = {
-      height,
-      width,
-      selectedNo: 0,
-      maximum: false,
-      procs: parse(props.config, { top: 0, left: 0, height, width })
-    };
+    this.state = { height, width, procs, selectedNo: 0, maximum: false };
   }
 
   moveNo = (amount, _key) => {
@@ -59,7 +55,11 @@ class App extends Component {
     this.setState({ selectedNo });
   };
 
-  clearLog = () => {};
+  clearLog = () => {
+    const { procs, selectedNo } = this.state;
+    const targets = selectedNo ? [procs[selectedNo - 1]] : procs;
+    targets.forEach(proc => this.refs[proc.key].clear());
+  };
 
   toggleWindow = () => {
     this.setState({ maximum: !this.state.maximum });
@@ -108,6 +108,7 @@ class App extends Component {
         height,
         width,
         name: rawProps.name,
+        key: rawProps.key,
         hidden: false
       };
     } else {
@@ -117,7 +118,7 @@ class App extends Component {
     return {
       ...props,
       index: no,
-      key: `proc-${no}`,
+      ref: props.key,
       selected
     };
   };

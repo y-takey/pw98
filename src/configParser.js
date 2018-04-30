@@ -22,8 +22,9 @@ const parse = ({ direction, procs }, { top, left, height, width }) => {
       currentPos.top = size[0] * i;
     }
     if (proc.direction) return parse(proc, currentPos);
+    const [command, ...commandArgs] = proc.command.split(" ");
 
-    return { ...currentPos, name: proc.name };
+    return { ...currentPos, name: proc.name, command, commandArgs };
   });
 };
 

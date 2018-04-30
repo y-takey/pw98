@@ -11,6 +11,10 @@ class Window extends Component {
     clearInterval(this.timer);
   }
 
+  clear() {
+    this.refs.log.setContent("");
+  }
+
   render() {
     const {
       top,
