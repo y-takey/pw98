@@ -5,13 +5,13 @@
   "bin": "bin/index.js",
   "scripts": {
     "build": "babel src --out-dir bin",
-    "lint": "eslint src test",
-    "flow": "flow check",
+    "lint": "eslint src test --color",
+    "flow": "flow check --color always",
     "clean": "rimraf bin",
     "publish:patch": "npm version patch && npm publish",
     "publish:minor": "npm version minor && npm publish",
     "publish:major": "npm version major && npm publish",
-    "test": "jest --watch",
+    "test": "jest --watch --color",
     "exe": "node bin/index.js ./examples/config.js",
     "watch": "npm-watch"
   },

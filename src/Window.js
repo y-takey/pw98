@@ -16,7 +16,7 @@ class Window extends Component {
     const { command, commandArgs } = this.props;
     if (this.childProc) this.stopProc();
 
-    this.childProc = spawn(command, [...commandArgs, "--color"], {
+    this.childProc = spawn(command, commandArgs, {
       stdio: [null, null, null, null],
       detached: true
     });
