@@ -9,6 +9,7 @@ import { render } from "react-blessed";
 
 import App from "./App";
 import Screen from "./screen";
+import updateCheck from "./selfUpdateChecker";
 import pkg from "../package.json";
 
 program.version(pkg.version).parse(process.argv);
@@ -22,6 +23,14 @@ if (!fs.existsSync(configPath)) {
   process.exit(1);
 }
 
-const config = require(configPath);
+// self version check
+const versionCheckResult = [];
+setImmediate(updateCheck, pkg.version, versionCheckResult);
+process.on("exit", () => {
+  if (!versionCheckResult.length) return;
 
+  console.log(versionCheckResult.join("\n"));
+});
+
+const config = require(configPath);
 render(<App config={config} />, Screen);
