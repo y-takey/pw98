@@ -1,6 +1,6 @@
 {
   "name": "pw98",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "customizable multiple process window",
   "bin": "bin/index.js",
   "scripts": {
@@ -22,7 +22,11 @@
     "type": "git",
     "url": "git+https://github.com/y-takey/pw98.git"
   },
-  "keywords": ["devtool", "frontend", "terminal"],
+  "keywords": [
+    "devtool",
+    "frontend",
+    "terminal"
+  ],
   "author": "y-takey",
   "license": "MIT",
   "bugs": {
