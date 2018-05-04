@@ -52,3 +52,65 @@ test("basic", () => {
     ]
   );
 });
+
+const testConfig2 = {
+  direction: "row",
+  procs: [
+    { name: "cmd1", command: "date" },
+    {
+      direction: "row",
+      procs: [
+        { name: "cmd2", command: "date" },
+        { name: "cmd3", command: "date" }
+      ]
+    },
+    { name: "cmd4", command: "date" }
+  ]
+};
+
+test("basic", () => {
+  expect(
+    parse(testConfig2, { top: 0, left: 0, height: 21, width: 30 })
+  ).toEqual([
+    {
+      top: 0,
+      left: 0,
+      height: 21,
+      width: 10,
+      name: "cmd1",
+      command: "date",
+      commandArgs: []
+    },
+    {
+      top: 0,
+      left: 10,
+      height: 21,
+      width: 5,
+      name: "cmd2",
+      command: "date",
+      commandArgs: []
+    },
+    {
+      top: 0,
+      left: 15,
+      height: 21,
+      width: 5,
+      name: "cmd3",
+      command: "date",
+      commandArgs: []
+    },
+    {
+      top: 0,
+      left: 20,
+      height: 21,
+      width: 10,
+      name: "cmd4",
+      command: "date",
+      commandArgs: []
+    }
+  ]);
+});
+
+test("example", () => {
+  expect(1 + 2).toEqual(3);
+});

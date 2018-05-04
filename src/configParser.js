@@ -16,10 +16,10 @@ const parse = ({ direction, procs }, { top, left, height, width }) => {
   return flatMap(procs, (proc, i) => {
     if (direction === "row") {
       currentPos.width = size[i];
-      currentPos.left = size[0] * i;
+      currentPos.left = left + size[0] * i;
     } else {
       currentPos.height = size[i];
-      currentPos.top = size[0] * i;
+      currentPos.top = top + size[0] * i;
     }
     if (proc.direction) return parse(proc, currentPos);
     const [command, ...commandArgs] = proc.command.split(" ");
