@@ -4,16 +4,17 @@ import Window from "./Window";
 import parse from "./configParser";
 
 const keyDesc = _.map(
-  {
-    "<-/->": "Move",
-    "0": "Deselect",
-    "1-9": "Select",
-    c: "Clear",
-    m: "Maximize/Minimize",
-    r: "Restart"
-  },
-  (v, k) => ` ${k}: ${v}`
-).join(", ");
+  [
+    ["<-/->", "Move"],
+    ["1-9", "Select"],
+    ["0", "Deselect"],
+    ["c", "Clear"],
+    ["m", "Max/Min"],
+    ["r", "Restart"],
+    ["Ctrl+c", "Exit"]
+  ],
+  ([k, v]) => ` ${k}: ${v}`
+).join("  ");
 
 const containerOptions = {
   focused: true,
@@ -135,7 +136,12 @@ class App extends Component {
         {procs.map((props, i) => (
           <Window {...this.windowProps(props, i + 1)} />
         ))}
-        <text top={height}>{keyDesc}</text>
+        <box
+          top={height}
+          height={1}
+          style={{ fg: "black", bg: "white" }}
+          content={keyDesc}
+        />
       </box>
     );
   }
