@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import spawn from "cross-spawn";
 
 class Window extends Component {
+  state = { active: false };
+
   componentDidMount() {
     this.startProc();
   }
@@ -20,18 +22,24 @@ class Window extends Component {
     });
     this.childProc.stdout.on("data", this.addLog);
     this.childProc.stderr.on("data", this.addLog);
-    this.childProc.on("close", () => (this.childProc = null));
+    this.childProc.on("close", this.deactivate);
+    this.setState({ active: true });
   };
 
   stopProc = () => {
     if (!this.childProc) return;
     this.childProc.kill();
-    this.childProc = null;
+    this.deactivate();
   };
 
   restartProc = () => {
     this.stopProc();
     this.startProc();
+  };
+
+  deactivate = () => {
+    this.childProc = null;
+    this.setState({ active: false });
   };
 
   clear = () => {
@@ -65,6 +73,11 @@ class Window extends Component {
       hidden
     } = this.props;
 
+    const borderColor = selected
+      ? "cyan"
+      : this.state.active
+        ? "white"
+        : "gray";
     const options = {
       top,
       left,
@@ -81,12 +94,18 @@ class Window extends Component {
       border: { type: "line" },
       mouse: true,
       style: {
-        border: { fg: selected ? "cyan" : "white" },
+        border: { fg: borderColor },
         scrollbar: { bg: "white" }
       }
     };
 
-    return <log ref="log" {...options} label={` [${index}] ${name} `} />;
+    return (
+      <log
+        ref="log"
+        {...options}
+        label={` [${index}] ${name} ${this.state.active ? "" : "(inactive) "}`}
+      />
+    );
   }
 }
 
