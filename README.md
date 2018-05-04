@@ -1,6 +1,6 @@
 # pw98
 
-customizable multiple process window
+Terminal application that customizable multiple process window.
 
 ![basic](https://raw.githubusercontent.com/y-takey/pw98/master/demo/ss1-basic.png)
 
@@ -57,7 +57,7 @@ pw98 /any/config/absolute/path.js
 
 ### 1. Simple ver (JSON)
 
-```
+```json
 {
   "direction": "row",
   "procs": [
@@ -71,7 +71,7 @@ pw98 /any/config/absolute/path.js
 
 ### 2. Complex ver (CommonJS Style)
 
-```
+```js
 const pane1 = { name: "pane1", command: "echo sample2-1" };
 const pane2 = { name: "pane2", command: "echo sample2-2" };
 const pane3 = { name: "pane3", command: "echo sample2-3" };
