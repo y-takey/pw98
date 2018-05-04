@@ -27,13 +27,21 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { ...this.calcProcInfo(), selectedNo: 0, maximum: false };
+  }
+
+  calcProcInfo = () => {
     const height = process.stdout.rows - 1;
     const width = process.stdout.columns;
-    const procs = parse(props.config, { top: 0, left: 0, height, width });
+    const procs = parse(this.props.config, { top: 0, left: 0, height, width });
     procs.forEach((proc, i) => (proc.key = `proc${i + 1}`));
 
-    this.state = { height, width, procs, selectedNo: 0, maximum: false };
-  }
+    return { height, width, procs };
+  };
+
+  handleResize = () => {
+    this.setState(this.calcProcInfo());
+  };
 
   moveNo = (amount, _key) => {
     let selectedNo = this.state.selectedNo + amount;
@@ -132,7 +140,12 @@ class App extends Component {
     const layout = { top: 0, left: 0, height, width };
 
     return (
-      <box {...containerOptions} {...layout} onKeypress={this.handleKeypress}>
+      <box
+        {...containerOptions}
+        {...layout}
+        onKeypress={this.handleKeypress}
+        onResize={this.handleResize}
+      >
         {procs.map((props, i) => (
           <Window {...this.windowProps(props, i + 1)} />
         ))}
