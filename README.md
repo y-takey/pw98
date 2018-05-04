@@ -11,9 +11,7 @@ $ yarn watch
 
 ### test
 
-examples/config.js
-
 ```
 $ yarn build
-$ node bin/index.js ../examples/config.js
+$ node bin/index.js ./examples/config.js
 ```

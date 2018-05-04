@@ -1,6 +1,6 @@
 {
   "name": "pw98",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "customizable multiple process window",
   "bin": "bin/index.js",
   "scripts": {
@@ -8,9 +8,9 @@
     "lint": "eslint src test --color",
     "flow": "flow check --color always",
     "clean": "rimraf bin",
-    "publish:patch": "npm version patch && npm publish",
-    "publish:minor": "npm version minor && npm publish",
-    "publish:major": "npm version major && npm publish",
+    "publish:patch": "npm version patch && yarn build && npm publish",
+    "publish:minor": "npm version minor && yarn build && npm publish",
+    "publish:major": "npm version major && yarn build && npm publish",
     "test": "jest --watch --color",
     "exe": "node bin/index.js ./examples/config.js",
     "watch": "npm-watch"
