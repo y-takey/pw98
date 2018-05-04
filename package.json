@@ -12,7 +12,7 @@
     "publish:minor": "npm version minor && npm publish",
     "publish:major": "npm version major && npm publish",
     "test": "jest --watch",
-    "exe": "node bin/index.js ../examples/config.js",
+    "exe": "node bin/index.js ./examples/config.js",
     "watch": "npm-watch"
   },
   "watch": {
@@ -22,11 +22,7 @@
     "type": "git",
     "url": "git+https://github.com/y-takey/pw98.git"
   },
-  "keywords": [
-    "devtool",
-    "frontend",
-    "terminal"
-  ],
+  "keywords": ["devtool", "frontend", "terminal"],
   "author": "y-takey",
   "license": "MIT",
   "bugs": {
