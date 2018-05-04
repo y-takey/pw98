@@ -1,23 +1,19 @@
-const test = {
-  name: "test",
-  command: "jest"
-};
-const lint = {
-  name: "lint",
-  command: "yarn lint"
-};
-const flow = {
-  name: "flow",
-  command: "yarn flow"
-};
-
 module.exports = {
   direction: "row",
   procs: [
-    test,
     {
-      direction: "column",
-      procs: [lint, flow]
+      direction: "colomn",
+      procs: [
+        { name: "build", command: "yarn watch" },
+        { name: "test", command: "yarn test" }
+      ]
+    },
+    {
+      direction: "colomn",
+      procs: [
+        { name: "lint", command: "yarn lint" },
+        { name: "flow", command: "yarn flow" }
+      ]
     }
   ]
 };
