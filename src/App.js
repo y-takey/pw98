@@ -16,11 +16,10 @@ const keyDesc = _.map(
 ).join(", ");
 
 const containerOptions = {
+  focused: true,
   keys: true,
   keyable: true,
-  mouse: false,
-  focused: true,
-  scrollable: false
+  mouse: false
 };
 
 class App extends Component {
