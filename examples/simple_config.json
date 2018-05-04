@@ -1,4 +1,7 @@
 {
   "direction": "row",
-  "procs": [{ "name": "pane1", "command": "date" }, { "name": "pane2", "command": "echo sample" }]
+  "procs": [
+    { "name": "pane1", "command": "echo sample1-1" },
+    { "name": "pane2", "command": "echo sample1-2" }
+  ]
 }
