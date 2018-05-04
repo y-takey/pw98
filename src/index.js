@@ -2,7 +2,6 @@
 // @flow
 
 import program from "commander";
-import spawn from "cross-spawn";
 import React from "react";
 import { render } from "react-blessed";
 

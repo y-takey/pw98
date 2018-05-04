@@ -55,17 +55,22 @@ class App extends Component {
     this.setState({ selectedNo });
   };
 
-  clearLog = () => {
+  targetProcs = () => {
     const { procs, selectedNo } = this.state;
-    const targets = selectedNo ? [procs[selectedNo - 1]] : procs;
-    targets.forEach(proc => this.refs[proc.key].clear());
+    return selectedNo ? [procs[selectedNo - 1]] : procs;
+  };
+
+  clearLog = () => {
+    this.targetProcs().forEach(proc => this.refs[proc.key].clear());
   };
 
   toggleWindow = () => {
     this.setState({ maximum: !this.state.maximum });
   };
 
-  restartProc = () => {};
+  restartProc = () => {
+    this.targetProcs().forEach(proc => this.refs[proc.key].restartProc());
+  };
 
   keyBindings = keyName => {
     if (!this._keyMap) {
@@ -103,12 +108,11 @@ class App extends Component {
     let props;
     if (maximize && selected) {
       props = {
+        ...rawProps,
         top: 0,
         left: 0,
         height,
         width,
-        name: rawProps.name,
-        key: rawProps.key,
         hidden: false
       };
     } else {
