@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { Component } from "react";
+import * as React from "react";
 import Window from "./Window";
 import parse from "./configParser";
 
@@ -23,7 +23,7 @@ const containerOptions = {
   mouse: false
 };
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -33,8 +33,15 @@ class App extends Component {
   calcProcInfo = () => {
     const height = process.stdout.rows - 1;
     const width = process.stdout.columns;
-    const procs = parse(this.props.config, { top: 0, left: 0, height, width });
-    procs.forEach((proc, i) => (proc.key = `proc${i + 1}`));
+    const procs = parse(this.props.config, {
+      top: 0,
+      left: 0,
+      height,
+      width
+    }).map((proc, i) => ({
+      ...proc,
+      key: `proc${i + 1}`
+    }));
 
     return { height, width, procs };
   };
@@ -43,7 +50,7 @@ class App extends Component {
     this.setState(this.calcProcInfo());
   };
 
-  moveNo = (amount, _key) => {
+  moveNo = amount => {
     let selectedNo = this.state.selectedNo + amount;
     const maxNo = this.state.procs.length;
     if (selectedNo < 0) {
@@ -81,8 +88,8 @@ class App extends Component {
   };
 
   keyBindings = keyName => {
-    if (!this._keyMap) {
-      this._keyMap = {
+    if (!this.keyMap) {
+      this.keyMap = {
         left: _.partial(this.moveNo, -1),
         right: _.partial(this.moveNo, 1),
         "0": this.selectNo,
@@ -100,7 +107,7 @@ class App extends Component {
         r: this.restartProc
       };
     }
-    return this._keyMap[keyName];
+    return this.keyMap[keyName];
   };
 
   handleKeypress = (_char, key) => {

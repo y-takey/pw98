@@ -2,18 +2,20 @@
   "parser": "babel-eslint",
   "extends": [
     "airbnb-base",
+    "plugin:react/recommended",
     "plugin:flowtype/recommended",
     "plugin:prettier/recommended",
     "prettier/flowtype"
   ],
   "plugins": [
-    "flowtype",
-    "flowtype-errors"
+    "react",
+    "flowtype"
   ],
   "env": {
+    "node": true,
     "jest": true
   },
   "rules": {
-    "flowtype-errors/show-errors": "error"
+    "react/jsx-uses-vars": "error"
   }
 }

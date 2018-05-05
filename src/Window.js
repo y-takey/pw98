@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import * as React from "react";
 import spawn from "cross-spawn";
 
-class Window extends Component {
+class Window extends React.Component {
   state = { active: false };
 
   componentDidMount() {
@@ -61,23 +61,15 @@ class Window extends Component {
     this.lastOutputTime = nowTime;
   };
 
-  render() {
-    const {
-      top,
-      left,
-      height,
-      width,
-      index,
-      name,
-      selected,
-      hidden
-    } = this.props;
+  getBorderColor() {
+    if (this.props.selected) return "cyan";
 
-    const borderColor = selected
-      ? "cyan"
-      : this.state.active
-        ? "white"
-        : "gray";
+    return this.state.active ? "white" : "gray";
+  }
+
+  render() {
+    const { top, left, height, width, index, name, hidden } = this.props;
+
     const options = {
       top,
       left,
@@ -94,7 +86,7 @@ class Window extends Component {
       border: { type: "line" },
       mouse: true,
       style: {
-        border: { fg: borderColor },
+        border: { fg: this.getBorderColor() },
         scrollbar: { bg: "white" }
       }
     };

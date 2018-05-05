@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // @flow
+/* eslint no-console: "off" */
 
 import path from "path";
 import fs from "fs";
@@ -8,7 +9,7 @@ import React from "react";
 import { render } from "react-blessed";
 
 import App from "./App";
-import Screen from "./screen";
+import Screen from "./Screen";
 import updateCheck from "./selfUpdateChecker";
 import pkg from "../package.json";
 
@@ -32,5 +33,6 @@ process.on("exit", () => {
   console.log(versionCheckResult.join("\n"));
 });
 
+// eslint-disable-next-line import/no-dynamic-require
 const config = require(configPath);
 render(<App config={config} />, Screen);

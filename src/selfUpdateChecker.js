@@ -49,10 +49,10 @@ const messageGenerator = (prevVer, nextVer) => [
 ];
 
 module.exports = (currentVersion, messages) => {
-  request(options, (error, response, body) => {
-    if (error || response.statusCode != 302) return;
+  request(options, (error, response) => {
+    if (error || response.statusCode !== 302) return;
 
-    const match = response.headers.location.match(/@([\d\.]+)$/);
+    const match = response.headers.location.match(/@([\d.]+)$/);
     const newestVersion = match && match[1];
     if (!newestVersion || currentVersion === newestVersion) return;
 

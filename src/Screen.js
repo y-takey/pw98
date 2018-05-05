@@ -8,6 +8,6 @@ const Screen = blessed.screen({
   title: "PW98"
 });
 
-Screen.key(["C-c"], (ch, key) => process.exit(0));
+Screen.key(["C-c"], () => process.exit(0));
 
 export default Screen;
