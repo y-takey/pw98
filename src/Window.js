@@ -1,8 +1,29 @@
+// @flow
 import * as React from "react";
 import spawn from "cross-spawn";
 
-class Window extends React.Component {
-  state = { active: false };
+type Props = {
+  top: number,
+  left: number,
+  height: number,
+  width: number,
+  index: number,
+  name: string,
+  command: string,
+  commandArgs: Array<string>,
+  selected: boolean,
+  hidden: boolean
+};
+
+type State = {
+  active: boolean
+};
+
+class Window extends React.Component<Props, State> {
+  state: State = { active: false };
+  childProc: any = null;
+  log: any = null;
+  lastOutputTime: number = 0;
 
   componentDidMount() {
     this.startProc();
@@ -46,7 +67,7 @@ class Window extends React.Component {
     this.log.setContent("");
   };
 
-  addLog = data => {
+  addLog = (data: any) => {
     const nowTime = Date.now();
     if (this.lastOutputTime + 3000 < nowTime) {
       const timeStamp = new Date().toTimeString().slice(0, 8);
@@ -61,7 +82,7 @@ class Window extends React.Component {
     this.lastOutputTime = nowTime;
   };
 
-  getBorderColor() {
+  getBorderColor(): string {
     if (this.props.selected) return "cyan";
 
     return this.state.active ? "white" : "gray";

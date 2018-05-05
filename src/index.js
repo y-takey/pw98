@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// @flow
 /* eslint no-console: "off" */
 
 import path from "path";

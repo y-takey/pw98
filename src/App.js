@@ -1,7 +1,20 @@
+// @flow
+import tty from "tty";
 import _ from "lodash";
 import * as React from "react";
 import Window from "./Window";
 import parse from "./configParser";
+
+type Proc = { name: string, command: string };
+type Pane = { direction: "row" | "column", procs: Array<Proc | Pane> };
+type Props = { config: Pane };
+type State = {
+  height: number,
+  width: number,
+  procs: Array<Object>,
+  selectedNo: number,
+  maximum: boolean
+};
 
 const keyDesc = _.map(
   [
@@ -23,17 +36,23 @@ const containerOptions = {
   mouse: false
 };
 
-class App extends React.Component {
-  constructor(props) {
+class App extends React.Component<Props, State> {
+  keyMap = null;
+  panes = {};
+
+  constructor(props: Props) {
     super(props);
 
-    this.panes = {};
     this.state = { ...this.calcProcInfo(), selectedNo: 0, maximum: false };
   }
 
   calcProcInfo = () => {
-    const height = process.stdout.rows - 1;
-    const width = process.stdout.columns;
+    if (!(process.stdout instanceof tty.WriteStream))
+      return { height: 0, width: 0, procs: [] };
+
+    const { rows, columns } = process.stdout;
+    const height = rows - 1;
+    const width = columns;
     const procs = parse(this.props.config, {
       top: 0,
       left: 0,
@@ -51,7 +70,7 @@ class App extends React.Component {
     this.setState(this.calcProcInfo());
   };
 
-  moveNo = amount => {
+  moveNo = (amount: number) => {
     let selectedNo = this.state.selectedNo + amount;
     const maxNo = this.state.procs.length;
     if (selectedNo < 0) {
@@ -63,7 +82,7 @@ class App extends React.Component {
     this.setState({ selectedNo });
   };
 
-  selectNo = key => {
+  selectNo = (key: Object) => {
     let selectedNo = Number(key.ch);
     const maxNo = this.state.procs.length;
     if (selectedNo > maxNo) selectedNo = maxNo;
@@ -88,7 +107,7 @@ class App extends React.Component {
     this.targetProcs().forEach(proc => this.panes[proc.key].restartProc());
   };
 
-  keyBindings = keyName => {
+  keyBindings = (keyName: string) => {
     if (!this.keyMap) {
       this.keyMap = {
         left: _.partial(this.moveNo, -1),
@@ -111,12 +130,12 @@ class App extends React.Component {
     return this.keyMap[keyName];
   };
 
-  handleKeypress = (_char, key) => {
+  handleKeypress = (_char: any, key: Object) => {
     const func = this.keyBindings(key.name || key.ch);
     if (func) func(key);
   };
 
-  windowProps = (rawProps, no) => {
+  windowProps = (rawProps: Object, no: number) => {
     const { height, width, selectedNo, maximum } = this.state;
     const maximize = maximum && selectedNo;
     const selected = selectedNo === no;
