@@ -9,7 +9,7 @@ Terminal application that customizable multiple process window.
 # Installation
 
 ```
-yarn add global pw98
+yarn global add pw98
 # or
 npm install -g pw98
 ```
