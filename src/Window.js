@@ -43,21 +43,21 @@ class Window extends React.Component {
   };
 
   clear = () => {
-    this.refs.log.setContent("");
+    this.log.setContent("");
   };
 
   addLog = data => {
     const nowTime = Date.now();
     if (this.lastOutputTime + 3000 < nowTime) {
       const timeStamp = new Date().toTimeString().slice(0, 8);
-      this.refs.log.add("");
-      this.refs.log.add(
+      this.log.add("");
+      this.log.add(
         `{gray-fg}${"=".repeat(this.props.width - 13)} ${timeStamp}{/gray-fg}`
       );
-      this.refs.log.add("");
+      this.log.add("");
     }
 
-    this.refs.log.add(data.toString("utf8").replace(/\n+$/g, ""));
+    this.log.add(data.toString("utf8").replace(/\n+$/g, ""));
     this.lastOutputTime = nowTime;
   };
 
@@ -93,7 +93,9 @@ class Window extends React.Component {
 
     return (
       <log
-        ref="log"
+        ref={log => {
+          this.log = log;
+        }}
         {...options}
         label={` [${index}] ${name} ${this.state.active ? "" : "(inactive) "}`}
       />

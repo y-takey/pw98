@@ -27,6 +27,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.panes = {};
     this.state = { ...this.calcProcInfo(), selectedNo: 0, maximum: false };
   }
 
@@ -76,7 +77,7 @@ class App extends React.Component {
   };
 
   clearLog = () => {
-    this.targetProcs().forEach(proc => this.refs[proc.key].clear());
+    this.targetProcs().forEach(proc => this.panes[proc.key].clear());
   };
 
   toggleWindow = () => {
@@ -84,7 +85,7 @@ class App extends React.Component {
   };
 
   restartProc = () => {
-    this.targetProcs().forEach(proc => this.refs[proc.key].restartProc());
+    this.targetProcs().forEach(proc => this.panes[proc.key].restartProc());
   };
 
   keyBindings = keyName => {
@@ -137,7 +138,9 @@ class App extends React.Component {
     return {
       ...props,
       index: no,
-      ref: props.key,
+      ref: pane => {
+        this.panes[props.key] = pane;
+      },
       selected
     };
   };
@@ -154,7 +157,7 @@ class App extends React.Component {
         onResize={this.handleResize}
       >
         {procs.map((props, i) => (
-          <Window {...this.windowProps(props, i + 1)} />
+          <Window {...this.windowProps(props, i + 1)} key={props.key} />
         ))}
         <box
           top={height}
