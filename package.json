@@ -1,6 +1,6 @@
 {
   "name": "pw98",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "customizable multiple process window",
   "bin": "bin/index.js",
   "scripts": {
