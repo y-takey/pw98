@@ -11,6 +11,7 @@ type Props = {
   name: string,
   command: string,
   commandArgs: Array<string>,
+  onKeypress: Function,
   selected: boolean,
   hidden: boolean
 };
@@ -89,7 +90,16 @@ class Window extends React.Component<Props, State> {
   }
 
   render() {
-    const { top, left, height, width, index, name, hidden } = this.props;
+    const {
+      top,
+      left,
+      height,
+      width,
+      index,
+      name,
+      hidden,
+      onKeypress
+    } = this.props;
 
     const options = {
       top,
@@ -97,6 +107,7 @@ class Window extends React.Component<Props, State> {
       height,
       width,
       hidden,
+      onKeypress,
       scrollable: true,
       alwaysScroll: true,
       scrollbar: {
@@ -105,6 +116,7 @@ class Window extends React.Component<Props, State> {
       },
       tags: true,
       border: { type: "line" },
+      keyable: true,
       mouse: true,
       style: {
         border: { fg: this.getBorderColor() },

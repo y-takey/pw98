@@ -31,7 +31,6 @@ const keyDesc = _.map(
 
 const containerOptions = {
   focused: true,
-  keys: true,
   keyable: true,
   mouse: false
 };
@@ -176,7 +175,11 @@ class App extends React.Component<Props, State> {
         onResize={this.handleResize}
       >
         {procs.map((props, i) => (
-          <Window {...this.windowProps(props, i + 1)} key={props.key} />
+          <Window
+            {...this.windowProps(props, i + 1)}
+            key={props.key}
+            onKeypress={this.handleKeypress}
+          />
         ))}
         <box
           top={height}
