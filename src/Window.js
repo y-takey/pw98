@@ -28,6 +28,8 @@ class Window extends React.Component<Props, State> {
 
   componentDidMount() {
     this.startProc();
+
+    process.on("exit", this.stopProc);
   }
 
   componentWillUnmount() {
@@ -50,7 +52,7 @@ class Window extends React.Component<Props, State> {
 
   stopProc = () => {
     if (!this.childProc) return;
-    this.childProc.kill();
+    this.childProc.kill("SIGTERM");
     this.deactivate();
   };
 
